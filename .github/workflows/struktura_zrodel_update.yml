@@ -3,6 +3,7 @@ name: Update ZONE heat sources data
 on:
   schedule:
     - cron: "00 21 * * *"
+
   workflow_dispatch:
 
 permissions:
@@ -27,12 +28,19 @@ jobs:
           pip install pandas requests openpyxl
 
       - name: Run script
-        run: python struktura_zrodel_update.py
+        run: python scripts/struktura_zrodel_update.py
 
       - name: Commit updated files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add zone_struktura_zrodel_ciepla_polska.xlsx zone_struktura_zrodel_ciepla_polska.csv
-          git diff --cached --quiet || git commit -m "Update ZONE heat sources data"
-          git push
+
+          git add data_xlsx/zone_struktura_zrodel_ciepla_polska.xlsx
+          git add data_csv/zone_struktura_zrodel_ciepla_polska.csv
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update ZONE heat sources data"
+            git push
+          fi
