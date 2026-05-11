@@ -12,8 +12,10 @@ REPORT_XLSX_URL = (
     "strukutra_zrodel_ciepla_polska.xlsx"
 )
 
-RAW_XLSX_PATH = Path("zone_struktura_zrodel_ciepla_polska.xlsx")
-OUT_CSV_PATH = Path("zone_struktura_zrodel_ciepla_polska.csv")
+BASE_DIR = Path(__file__).resolve().parents[1]
+
+RAW_XLSX_PATH = BASE_DIR / "data_xlsx" / "zone_struktura_zrodel_ciepla_polska.xlsx"
+OUT_CSV_PATH = BASE_DIR / "data_csv" / "zone_struktura_zrodel_ciepla_polska.csv"
 
 
 def download_file(url: str, timeout: int = 60) -> bytes:
